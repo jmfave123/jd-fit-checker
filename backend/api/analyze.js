@@ -3,7 +3,7 @@ import { chromium } from 'playwright'
 import profile from '../profile.json' with { type: 'json' }
 
 const requestLog = new Map()
-const RATE_LIMIT = 10
+const RATE_LIMIT = 100
 const WINDOW_MS = 60 * 60 * 1000
 
 function getClientIp(request) {
@@ -41,6 +41,7 @@ async function scrapeJobPosting(url) {
     }
     return { title, content: content.trim().slice(0, 30000) }
   } catch (error) {
+    console.error('[JD-Fit-Checker] Scrape error for URL:', url, 'Error:', error.message, error.stack)
     const scrapeError = new Error('We could not read that job posting. The site may block scraping, the URL may be invalid, or the page structure may be unexpected.')
     scrapeError.cause = error
     throw scrapeError
