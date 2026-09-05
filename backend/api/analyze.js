@@ -1,5 +1,4 @@
 import { GoogleGenerativeAI } from '@google/generative-ai'
-import { chromium } from 'playwright'
 import profile from '../profile.json' with { type: 'json' }
 
 const requestLog = new Map()
@@ -27,26 +26,33 @@ function sendJson(response, status, body) {
 }
 
 async function scrapeJobPosting(url) {
-  let browser
   try {
-    // A real browser handles job boards that render their description after page load.
-    browser = await chromium.launch({ headless: true })
-    const page = await browser.newPage({ userAgent: 'JD-Fit-Checker/1.0' })
-    await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 20000 })
-    await page.waitForLoadState('networkidle', { timeout: 8000 }).catch(() => {})
-    const content = await page.locator('body').innerText()
-    const title = await page.title()
-    if (!content || content.trim().length < 120) {
+    const response = await fetch(url, {
+      headers: {
+        'User-Agent': 'JD-Fit-Checker/1.0 (+https://jd-fit-checker.vercel.app)',
+      },
+      timeout: 15000,
+    })
+    if (!response.ok) throw new Error(`HTTP ${response.status}`)
+    const html = await response.text()
+    // Extract text from HTML: remove scripts, styles, and decode entities
+    const text = html
+      .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+      .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '')
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
+    const title = (html.match(/<title[^>]*>([^<]+)<\/title>/i) || [ url])[1]
+    if (!text || text.length < 120) {
       throw new Error('The page did not contain enough readable job description text.')
     }
-    return { title, content: content.trim().slice(0, 30000) }
+    console.log(`[JD-Fit-Checker] Scraped ${text.length} chars from ${url}`)
+    return { title, content: text.slice(0, 30000) }
   } catch (error) {
-    console.error('[JD-Fit-Checker] Scrape error for URL:', url, 'Error:', error.message, error.stack)
+    console.error('[JD-Fit-Checker] Scrape error for URL:', url, 'Error:', error.message)
     const scrapeError = new Error('We could not read that job posting. The site may block scraping, the URL may be invalid, or the page structure may be unexpected.')
     scrapeError.cause = error
     throw scrapeError
-  } finally {
-    await browser?.close()
   }
 }
 

@@ -7,13 +7,11 @@
     "dev": "vite frontend",
     "build": "vite build frontend",
     "lint": "eslint .",
-    "preview": "vite preview frontend",
-    "postinstall": "playwright install chromium"
+    "preview": "vite preview frontend"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
     "playwright": "^1.55.0",
-    "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },
   "devDependencies": {
