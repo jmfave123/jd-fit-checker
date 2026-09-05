@@ -110,8 +110,8 @@ function App() {
     <main className="app-shell">
       <header className="topbar">
         <a className="wordmark" href="/" aria-label="JD Fit Checker home">
-          <span className="wordmark-mark">JD</span>
-          <span>Fit Checker</span>
+          <img src="/assets/images/JD-logo.jpg" alt="JD Fit Checker" className="wordmark-logo" />
+          <span>JD Fit Checker</span>
         </a>
         <span className="topbar-note">Honest signal for your next move</span>
       </header>
