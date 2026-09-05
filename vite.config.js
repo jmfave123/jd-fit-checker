@@ -6,7 +6,7 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   root: 'frontend',
   publicDir: 'public',
-  build: { outDir: '../../dist', emptyOutDir: true },
+  build: { outDir: '../dist', emptyOutDir: true },
   plugins: [
     react(),
     babel({ presets: [reactCompilerPreset()] }),
