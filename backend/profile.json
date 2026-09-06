@@ -4,7 +4,7 @@
   "techStack": ["JavaScript", "TypeScript", "Dart", "Python", "C#", "SQL", "HTML5", "CSS3"],
   "frameworks": ["Flutter", "ReactJS", "Node.js", "Bootstrap", "Selenium", "Playwright"],
   "databasesBackend": ["Firebase", "MySQL", "NoSQL", "REST/FAST APIs", "CRON Jobs", "MS SQL"],
-  "toolsPlatforms": ["Vercel", "Docker", "Git", "GitHub", "JIRA", "Postman", "n8n", "Microsoft Office Suite"],
+  "toolsPlatforms": ["Vercel", "Docker", "Git", "GitHub", "JIRA", "Postman", "n8n", "Microsoft Office Suite", "GoHighLevel", "Zoho CRM"],
   "practices": ["SDLC", "Agile Methodologies", "Responsive UI Design", "API Integration", "Automated Workflows"],
   "aiTools": ["Claude AI/Code", "Antigravity", "GitHub Copilot", "ChatGPT/Codex", "Gemini", "Cursor", "Lovable", "Manus"],
   "projects": ["GreenQuest", "CampusSafe", "HookForge", "JD Fit Checker", "USTP Oroquieta Automated Scholarship Listing (n8n)"],
